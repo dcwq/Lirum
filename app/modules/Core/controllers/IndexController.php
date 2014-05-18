@@ -4,6 +4,7 @@ namespace Core\Controller;
 
 use Engine\Controller\AbstractController;
 use Services\User;
+use Core\Form\Test as TestForm;
 
 /**
  * Class IndexController
@@ -16,8 +17,11 @@ class IndexController extends AbstractController
 
     public function indexAction()
     {
-        $repository = $this->di->get('pshop.repository.product');
-
+        $repository = $this->di->get('lirum.repository.product');
+		$form = new TestForm();
+		
+		var_dump($form);
+		
         try
         {
         	User::getService('User')->getLast();
@@ -34,7 +38,7 @@ class IndexController extends AbstractController
 
     public function testAction()
     {
-        $repository = $this->di->get('pshop.repository.product');
+        $repository = $this->di->get('lirum.repository.product');
 
         try
         {

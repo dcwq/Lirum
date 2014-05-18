@@ -146,7 +146,7 @@ class Application extends PhalconApplication
 
     private function _initConfig()
     {
-        $this->di->set('config', require(ROOT_PATH . '/app/config/config.php'));
+        $this->di->set('config', require(ROOT_PATH . '/app/config/'.APPLICATION_STAGE.'/config.php'));
     }
 
     private function _initRegistry()
@@ -190,6 +190,7 @@ class Application extends PhalconApplication
             'Services' => ROOT_PATH . '/app/services/',
             'Repository' => ROOT_PATH . '/app/repositories/',
             'Core' => ROOT_PATH . '/app/modules/Core/',
+			'Core\Form' => ROOT_PATH . '/app/modules/Core/forms/',
             'Core\Controller' => ROOT_PATH . '/app/modules/Core/controllers/'
         ));
 
@@ -241,7 +242,7 @@ class Application extends PhalconApplication
 
     protected function _initRepositories()
     {
-        $repositoryPrefix = 'pshop.repository.';
+        $repositoryPrefix = 'lirum.repository.';
 
         // Get all file names.
         $files = scandir($this->getDI()->get('registry')->directories->repositories);

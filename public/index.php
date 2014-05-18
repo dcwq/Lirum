@@ -26,7 +26,6 @@ if (!defined('ROOT_PATH'))
     define('ROOT_PATH', dirname(dirname(__FILE__)));
 }
 
-require ROOT_PATH . "/app/config/config.php";
 require ROOT_PATH . "/app/engine/Exception.php";
 require ROOT_PATH . "/app/engine/Application.php";
 
