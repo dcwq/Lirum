@@ -1,6 +1,5 @@
 <?php
 
-
 //APP STAGE
 DEFINE('APPLICATION_STAGE_DEVELOPMENT', 'development');
 DEFINE('APPLICATION_STAGE_PRODUCTION', 'production');
@@ -20,7 +19,7 @@ else
     error_reporting(0);
 }
 
-//APP PATH
+//ROOT_PATH
 if (!defined('ROOT_PATH'))
 {
     define('ROOT_PATH', dirname(dirname(__FILE__)));

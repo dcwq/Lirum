@@ -38,7 +38,7 @@
                     <p class="lead">Sidebar</p>
                     <div class="list-group">
                         <a href="{{ url(['for':'cart-index']) }}" class="list-group-item">Cart</a>
-                        <a href="#" class="list-group-item">Github</a>
+                        <a href="{{ url(['for':'product-show', 'id':'1', 'slug':'slug'])}}" class="list-group-item">Product</a>
                     </div>
                 </div>
 

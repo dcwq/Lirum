@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Model;
+namespace Core\Model;
 
 use Engine\Db\AbstractModel;
 use Phalcon\DI;

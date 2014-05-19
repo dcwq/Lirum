@@ -201,6 +201,7 @@ class Application extends PhalconApplication
             $modulesDirs[$moduleName] = ROOT_PATH . '/app/modules/'.$moduleName.'/';
             $modulesDirs[$moduleName.'\Form'] = ROOT_PATH . '/app/modules/'.$moduleName.'/forms/';
             $modulesDirs[$moduleName.'\Controller'] = ROOT_PATH . '/app/modules/'.$moduleName.'/controllers/';
+            $modulesDirs[$moduleName.'\Model'] = ROOT_PATH . '/app/modules/'.$moduleName.'/models/';
         }
 
         $namespaces['Engine'] = $registry->directories->engine;
