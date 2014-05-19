@@ -70,6 +70,7 @@ abstract class Bootstrap
             $view = new \Phalcon\Mvc\View();
             $view->setViewsDir(ROOT_PATH . '/app/modules/'.$moduleName.'/views/');
             $view->registerEngines(array(".volt" => 'volt'));
+            $view->setPartialsDir('../../'.ucfirst($di->getConfig()->application->defaultModule).'/views/');
 
             return $view;
         });

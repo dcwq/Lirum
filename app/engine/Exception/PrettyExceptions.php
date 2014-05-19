@@ -89,7 +89,7 @@ class PrettyExceptions
      *
      * @var string
      */
-    protected $_uri = '/pretty-exceptions/';
+    protected $_uri = '/system/pretty-exceptions/';
 
     /**
      * Flag to control that only one exception/error is show at time

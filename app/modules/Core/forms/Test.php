@@ -8,6 +8,8 @@ class Test extends EngineForm
 {
 	public function __construct()
 	{
-		return 'FORM';
+
+
+
 	}
 }

@@ -3,50 +3,28 @@
 namespace Core\Controller;
 
 use Engine\Controller\AbstractController;
-use Services\User;
+use Services\Test;
 use Core\Form\Test as TestForm;
 
 /**
  * Class IndexController
  * @package Core\Controller
- *
- * RoutePrefix("/", name="invoice")
  */
 class IndexController extends AbstractController
 {
-
+    /**
+     * @Route("", methods={"GET"}, name="homepage")
+     */
     public function indexAction()
     {
-        $repository = $this->di->get('lirum.repository.product');
-		$form = new TestForm();
-		
-		var_dump($form);
-		
-        try
-        {
-        	User::getService('User')->getLast();
-        }
-        catch (\Exception $e)
-        {
-        	$this->flash->error($e->getMessage());
-        }
+        //$repository = $this->di->get('lirum.repository.test');
     }
 
     /**
      * @Route("/test", methods={"GET"}, name="test")
      */
-
     public function testAction()
     {
-        $repository = $this->di->get('lirum.repository.product');
 
-        try
-        {
-            User::getService('User')->getLast();
-        }
-        catch (\Exception $e)
-        {
-            $this->flash->error($e->getMessage());
-        }
     }
 }

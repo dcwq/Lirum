@@ -1,10 +1,10 @@
 <?php
 
-namespace Core;
+namespace Cart;
 
 use Engine\Bootstrap as EngineBootstrap;
 
 class Bootstrap extends EngineBootstrap
 {
-    protected $_moduleName = 'Core';
+    protected $_moduleName = 'cart';
 }

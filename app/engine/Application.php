@@ -32,7 +32,6 @@ class Application extends PhalconApplication
     public function run()
     {
         $di = DI::getDefault();
-        $config = $di->get('config');
         $eventsManager = new EventsManager();
         $this->setEventsManager($eventsManager);
 
@@ -46,6 +45,8 @@ class Application extends PhalconApplication
 
     public function registerModules($modules, $merge = NULL)
     {
+        $bootstraps = array();
+
         foreach ($modules as $moduleName => $moduleClass)
         {
             //var_dump($modules);
@@ -63,7 +64,9 @@ class Application extends PhalconApplication
             };
         }
 
-        return parent::registerModules($bootstraps, $merge);
+        parent::registerModules($bootstraps, $merge);
+
+        return true;
     }
 
     public function getOutput()
@@ -90,18 +93,18 @@ class Application extends PhalconApplication
                     $errorId = Exception::logException($e);
                     //$errorId = 1;
 
-//        if ($di->get('app')->isConsole())
-//        {
-//            echo 'Error <' . $errorId . '>: ' . $e->getMessage();
-//            return true;
-//        }
+//                    if ($di->get('app')->isConsole())
+//                    {
+//                        echo 'Error <' . $errorId . '>: ' . $e->getMessage();
+//                        return true;
+//                    }
 
-                    //if (APPLICATION_STAGE == APPLICATION_STAGE_DEVELOPMENT)
-                    //{
-                    $p = new \Engine\Exception\PrettyExceptions($di);
-                    $p->setBaseUri('pretty-exceptions/');
-                    return $p->handleException($e);
-                    //}
+                    if (APPLICATION_STAGE == APPLICATION_STAGE_DEVELOPMENT)
+                    {
+                        $p = new \Engine\Exception\PrettyExceptions($di);
+                        $p->setBaseUri('system/pretty-exceptions/');
+                        return $p->handleException($e);
+                    }
                 }
 
                 return true;
@@ -152,7 +155,6 @@ class Application extends PhalconApplication
     private function _initRegistry()
     {
         $registry = new \Phalcon\Registry();
-        $registry->modules = ['core'];
 
         $registry->directories = (object)[
             'engine' => ROOT_PATH . '/app/engine/',
@@ -160,6 +162,21 @@ class Application extends PhalconApplication
             'libraries' => ROOT_PATH . '/app/libraries/',
             'repositories' => ROOT_PATH . '/app/repositories/'
         ];
+
+        $modulesDir = scandir($registry->directories->modules);
+
+        $modules = array();
+
+        foreach ($modulesDir as $file)
+        {
+            if ($file == "." || $file == "..") {
+                continue;
+            }
+
+            $modules[] = strtolower($file);
+        }
+
+        $registry->modules = $modules;
 
         $this->di->set('registry', $registry);
     }
@@ -173,10 +190,17 @@ class Application extends PhalconApplication
         $namespaces = [];
         $bootstraps = [];
 
-        foreach ($registry->modules as $module) {
+        $modulesDirs = array();
+
+        foreach ($registry->modules as $module)
+        {
             $moduleName = ucfirst($module);
             $namespaces[$moduleName] = $registry->directories->modules . $moduleName;
             $bootstraps[$module] = $moduleName . '\Bootstrap';
+
+            $modulesDirs[$moduleName] = ROOT_PATH . '/app/modules/'.$moduleName.'/';
+            $modulesDirs[$moduleName.'\Form'] = ROOT_PATH . '/app/modules/'.$moduleName.'/forms/';
+            $modulesDirs[$moduleName.'\Controller'] = ROOT_PATH . '/app/modules/'.$moduleName.'/controllers/';
         }
 
         $namespaces['Engine'] = $registry->directories->engine;
@@ -185,20 +209,19 @@ class Application extends PhalconApplication
         $loader = new Loader();
         $loader->registerNamespaces($namespaces);
 
-        $loader->registerNamespaces(array(
+        $loader->registerNamespaces(array_merge(array(
             'Engine' => ROOT_PATH . '/app/engine/',
             'Services' => ROOT_PATH . '/app/services/',
             'Repository' => ROOT_PATH . '/app/repositories/',
-            'Core' => ROOT_PATH . '/app/modules/Core/',
-			'Core\Form' => ROOT_PATH . '/app/modules/Core/forms/',
-            'Core\Controller' => ROOT_PATH . '/app/modules/Core/controllers/'
-        ));
+            ), $modulesDirs)
+        );
 
         $loader->register();
 
-        $this->registerModules($bootstraps);
-
         $di->set('loader', $loader);
+
+        //register modules
+        $this->registerModules($bootstraps);
 
         return $loader;
     }
@@ -257,7 +280,11 @@ class Application extends PhalconApplication
             $repositoryName = substr($file, 0, strrpos($file, '.'));
             $className = 'Repository\\' . $repositoryName;
 
-            $this->di->set($repositoryPrefix . strtolower($repositoryName), new $className());
+            //dynamic allocate service namespace
+            if (class_exists($className))
+            {
+                $this->di->set($repositoryPrefix . strtolower($repositoryName), new $className());
+            }
         }
     }
 

@@ -24,7 +24,6 @@
 
     <div class="row-fluid row-after-header">
         <div>
-            {{ content() }}
             {{ flashSession.output() }}
         </div>
     </div>
@@ -34,23 +33,11 @@
 
             <div class="row">
 
-                <div class="col-md-3">
-                    <p class="lead">Sidebar</p>
-                    <div class="list-group">
-                        <a href="{{ url(['for':'cart-index']) }}" class="list-group-item">Cart</a>
-                        <a href="#" class="list-group-item">Github</a>
-                    </div>
-                </div>
+               <div class="col-md-12">
 
-                <div class="col-md-9">
-
-                    <div class="row">
-
-                        <div class="col-md-9">
-                            {%- block content -%}
-                            {%- endblock %}
-                        </div>
-
+                    <div class="col-md-12">
+                        {%- block content -%}
+                        {%- endblock %}
                     </div>
 
                 </div>
