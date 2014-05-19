@@ -38,6 +38,7 @@ class Application extends PhalconApplication
         $this->_initDispatcher();
         $this->_initLoader();
         $this->_initAnnotations();
+        $this->_initDatabase();
         $this->_initSession();
         $this->_initRepositories();
         $this->_initRouter();
@@ -72,6 +73,26 @@ class Application extends PhalconApplication
     public function getOutput()
     {
         return $this->handle()->getContent();
+    }
+
+    private function _initDatabase()
+    {
+        $di = $this->getDI();
+        $config = $di->get('config');
+
+        $adapter = '\Phalcon\Db\Adapter\Pdo\\' . $config->database->adapter;
+
+        $connection = new $adapter(
+            [
+                "host" => $config->database->host,
+                "port" => isset($config->database->port) ? $config->database->port : 3306,
+                "username" => $config->database->username,
+                "password" => $config->database->password,
+                "dbname" => $config->database->dbname,
+            ]
+        );
+
+        $di->set('db', $connection);
     }
 
     private function _initException()

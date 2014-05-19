@@ -23,7 +23,8 @@ class ProductController extends AbstractController
         $this->view->setVar('slug', $slug);
 
         $a = new Product();
-        var_dump($a);
+        $a->name = 'Nazwa ' . rand(1,999999);
+        $a->save();
     }
 
 }
