@@ -1,16 +1,16 @@
 <?php
 
-namespace Product\Model;
+namespace Category\Model;
 
 use Engine\Db\AbstractModel;
 
 /**
- * Product
+ * Category
  *
- * @Source("product")
+ * @Source("category")
  */
 
-class Product extends AbstractModel
+class Category extends AbstractModel
 {
     /**
      * @Primary
@@ -25,17 +25,16 @@ class Product extends AbstractModel
     public $name;
 
     private $registry;
-    private $SKU;
-    private $description;
-    private $price;
-    private $weight;
-    private $image;
-    private $stock;
-    private $heading;
+    private $subcatsCache = 0;
+    private $productsCache = 0;
+    private $numSubcats=0;
+    private $isValid = false;
+    private $numProducts = 0;
+    private $title;
+    private $content;
     private $metakeywords;
     private $metadescription;
     private $metarobots;
     private $active;
     private $secure;
-    private $activeProduct;
 }
