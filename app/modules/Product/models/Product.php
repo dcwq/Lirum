@@ -7,7 +7,7 @@ use Engine\Db\AbstractModel;
 /**
  * Product
  *
- * @Source("products")
+ * @Source("product")
  */
 
 class Product extends AbstractModel
