@@ -332,6 +332,11 @@ class Application extends PhalconApplication
             foreach ($modules as $module) {
                 $moduleName = ucfirst($module);
 
+                if (!file_exists($this->getDI()->get('registry')->directories->modules . $moduleName . '/controllers'))
+                {
+                    continue;
+                }
+
                 // Get all file names.
                 $files = scandir($this->getDI()->get('registry')->directories->modules . $moduleName . '/controllers');
 
