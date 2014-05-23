@@ -1,6 +1,6 @@
 <?php
 
-namespace Attribute\Model;
+namespace Product\Model;
 
 use Engine\Db\AbstractModel;
 

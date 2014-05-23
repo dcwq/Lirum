@@ -75,15 +75,12 @@ abstract class Bootstrap
             return $view;
         });
 
-        $view = $di->get('view');
-
         /**
          * Setting up volt engine
          */
         $di->set('volt', function($view, $di) {
 
             $config = $di->get('config');
-            //$view = $this->getDI()->get('view');
 
             $volt = new Volt($view, $di);
 

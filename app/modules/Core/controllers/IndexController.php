@@ -3,6 +3,7 @@
 namespace Core\Controller;
 
 use Engine\Controller\AbstractController;
+use Product\Model\Product;
 use Services\Test;
 use Core\Form\Test as TestForm;
 
@@ -17,7 +18,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        //$repository = $this->di->get('lirum.repository.test');
+
     }
 
     /**
@@ -25,6 +26,10 @@ class IndexController extends AbstractController
      */
     public function testAction()
     {
-
+        $product = new Product();
+        $product->name = 'Test';
+        $product->description = 'Description';
+        $product->price = rand(1,30);
+        $product->save();
     }
 }

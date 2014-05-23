@@ -8,6 +8,7 @@ use Engine\Db\AbstractModel;
  * Category
  *
  * @Source("category")
+ * @HasMany("id", "ProductCategory", "product_id")
  */
 
 class Category extends AbstractModel
